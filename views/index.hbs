@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Quản lý Sách Cloud</title></head>
+<body>
+    <h1>Thêm Sách Mới</h1>
+    <form action="/add" method="POST">
+        Mã SP (Bắt đầu bằng 280): <input type="text" name="code" required><br><br>
+        Tên Sách: <input type="text" name="name" required><br><br>
+        Giá gốc: <input type="number" name="price" required><br><br>
+        <button type="submit">Lưu vào MongoDB</button>
+    </form>
+    <hr>
+    <h2>Danh sách hiện có:</h2>
+    <ul>
+        {{#each books}}
+            <li>{{this.code}} - {{this.name}} - Giá sau thuế: {{this.finalPrice}}</li>
+        {{/each}}
+    </ul>
+    <hr>
+    <footer>
+        Sinh viên thực hiện: Huỳnh Thị Đài Trang - 23IT280 | Mức VAT áp dụng: 6%
+    </footer>
+</body>
+</html>
