@@ -49,8 +49,20 @@ const BookWrite = connWrite.model('Book', bookSchema);
 // Route GET: Lấy danh sách (Sử dụng luồng Read)
 app.get('/', async (req, res) => {
     try {
+        // Tăng biến đếm trong Session lưu trên Cloud
+        if (req.session.views) {
+            req.session.views++;
+        } else {
+            req.session.views = 1;
+        }
+
         const books = await BookRead.find().lean();
-        res.render('index', { books });
+        
+        // Truyền cả mảng sách và số lượt truy cập (views) ra ngoài giao diện
+        res.render('index', { 
+            books: books, 
+            views: req.session.views 
+        });
     } catch (error) {
         console.error("Lỗi lấy dữ liệu:", error);
         res.status(500).send("Đã xảy ra lỗi khi tải danh sách sách.");

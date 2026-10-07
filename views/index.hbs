@@ -1,24 +1,74 @@
 <!DOCTYPE html>
-<html>
-<head><title>Quản lý Sách Cloud</title></head>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Sách Cloud</title>
+    <!-- Nhúng thư viện Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; }
+    </style>
+</head>
 <body>
-    <h1>Thêm Sách Mới</h1>
-    <form action="/add" method="POST">
-        Mã SP (Bắt đầu bằng 280): <input type="text" name="code" required><br><br>
-        Tên Sách: <input type="text" name="name" required><br><br>
-        Giá gốc: <input type="number" name="price" required><br><br>
-        <button type="submit">Lưu vào MongoDB</button>
-    </form>
-    <hr>
-    <h2>Danh sách hiện có:</h2>
-    <ul>
-        {{#each books}}
-            <li>{{this.code}} - {{this.name}} - Giá sau thuế: {{this.finalPrice}}</li>
-        {{/each}}
-    </ul>
-    <hr>
-    <footer>
-        Sinh viên thực hiện: Huỳnh Thị Đài Trang - 23IT280 | Mức VAT áp dụng: 6%
-    </footer>
+    <div class="container py-5" style="max-width: 900px;">
+        <h2 class="fw-bold mb-3">Quản lý Sách (Cloud Computing)</h2>
+        <p class="text-muted mb-4">Số lượt truy cập trong phiên (Stateless Session): <strong>{{views}}</strong></p>
+
+        <h4 class="mb-3">Thêm sách mới</h4>
+        <div class="card shadow-sm mb-5 border-0">
+            <div class="card-body p-4">
+                <form action="/add" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary fw-semibold">Mã sách (Bắt buộc bắt đầu bằng 280 - 3 số cuối MSSV):</label>
+                        <input type="text" class="form-control" name="code" placeholder="Ví dụ: 280001" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary fw-semibold">Tên sách:</label>
+                        <input type="text" class="form-control" name="name" placeholder="Nhập tên sách" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-secondary fw-semibold">Giá gốc (VNĐ):</label>
+                        <input type="number" class="form-control" name="price" placeholder="Nhập giá gốc" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary px-4 py-2">Thêm Sách</button>
+                </form>
+            </div>
+        </div>
+
+        <h4 class="mb-3">Danh sách sách hiện có</h4>
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Mã sách</th>
+                                <th>Tên sách</th>
+                                <th>Giá gốc</th>
+                                <th>VAT</th>
+                                <th>Giá sau thuế</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each books}}
+                            <tr>
+                                <td>{{this.code}}</td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.originalPrice}}</td>
+                                <td>6%</td>
+                                <td class="fw-bold">{{this.finalPrice}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-muted mt-5 mb-3">
+            <small>Sinh viên thực hiện: Huỳnh Thị Đài Trang - 23IT280 | Mức VAT áp dụng: 6%</small>
+        </footer>
+    </div>
 </body>
 </html>
